@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="yii2," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="savior" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="简介 Yii 在操作数据库方面提供了一个十分强大的类库来支撑整个框架业务的运转，这就是 Active Record （活动记录，以下简称AR）。">
+<meta name="keywords" content="yii2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="yii2-ActiveRecord">
+<meta property="og:url" content="http://blog.upstady.com/2017/08/29/yii2-ActiveRecord/index.html">
+<meta property="og:site_name" content="savior">
+<meta property="og:description" content="简介 Yii 在操作数据库方面提供了一个十分强大的类库来支撑整个框架业务的运转，这就是 Active Record （活动记录，以下简称AR）。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-08-01T06:32:44.846Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="yii2-ActiveRecord">
+<meta name="twitter:description" content="简介 Yii 在操作数据库方面提供了一个十分强大的类库来支撑整个框架业务的运转，这就是 Active Record （活动记录，以下简称AR）。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.upstady.com/2017/08/29/yii2-ActiveRecord/"/>
+
+
+
+
+
+  <title>yii2-ActiveRecord | savior</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">savior</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一叶障目，不见泰山</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.upstady.com/2017/08/29/yii2-ActiveRecord/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Savior Lv">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="savior">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">yii2-ActiveRecord</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-29T17:07:29+08:00">
+                2017-08-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Yii2/" itemprop="url" rel="index">
+                    <span itemprop="name">Yii2</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><blockquote>
+<p>Yii 在操作数据库方面提供了一个十分强大的类库来支撑整个框架业务的运转，这就是 Active Record （活动记录，以下简称AR）。</p>
+</blockquote>
+<a id="more"></a>
+<h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><blockquote>
+<p>AR类提供了一个面向对象的接口， 用以访问数据库中的数据。例如，假定 Customer AR 类关联着 customer 表，且该类的 name 属性代表 customer 表的 name 列。 你可以写以下代码来哉customer 表里插入一行新的记录:</p>
+<p>用 AR 而不是原生的 SQL 语句去执行数据库查询，可以调用直观方法来实现相同目标。如，调用 yiidbActiveRecord::save() 方法将执行插入或更新轮询，将在该 AR 类关联的数据表新建或更新一行数据：</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$customer = <span class="keyword">new</span> Customer();</div><div class="line">$customer-&gt;name = <span class="string">'Qiang'</span>;</div><div class="line">$customer-&gt;save();  <span class="comment">// 一行新数据插入 customer 表</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>上面的代码和使用下面的原生 SQL 语句是等效的，但显然前者更直观， 更不易出错，并且面对不同的数据库系统（DBMS, Database Management System）时更不容易产生兼容性问题。</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$db-&gt;createCommand(<span class="string">'INSERT INTO customer (name) VALUES (:name)'</span>, [</div><div class="line">    <span class="string">':name'</span> =&gt; <span class="string">'Qiang'</span>,</div><div class="line">])-&gt;execute();</div></pre></td></tr></table></figure>
+<blockquote>
+<p>下面是所有目前被 Yii 的 AR 功能所支持的数据库列表：<br>MySQL 4.1 及以上：通过 yiidbActiveRecord<br>PostgreSQL 7.3 及以上：通过 yiidbActiveRecord<br>SQLite 2 和 3：通过 yiidbActiveRecord<br>Microsoft SQL Server 2010 及以上：通过 yiidbActiveRecord<br>Oracle: 通过 yiidbActiveRecord<br>CUBRID 9.1 及以上：通过 yiidbActiveRecord<br>Sphinx：通过 yiisphinxActiveRecord，需求 yii2-sphinx 扩展<br>ElasticSearch：通过 yiielasticsearchActiveRecord，需求 yii2-elasticsearch 扩展<br>Redis 2.6.12 及以上：通过 yiiredisActiveRecord，需求 yii2-redis 扩展<br>MongoDB 1.3.0 及以上：通过 yiimongodbActiveRecord，需求 yii2-mongodb 扩展<br>如你所见，Yii 不仅提供了对关系型数据库的 AR 支持，还提供了 NoSQL 数据库的支持。</p>
+</blockquote>
+<h3 id="声明-AR-类"><a href="#声明-AR-类" class="headerlink" title="声明 AR 类"></a>声明 AR 类</h3><blockquote>
+<p>要想声明一个 AR 类，你需要扩展 yiidbActiveRecord 基类， 并实现 tableName 方法，返回与之相关联的的数据表的名称：</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">namespace</span> <span class="title">app</span>\<span class="title">models</span>;</div><div class="line"></div><div class="line"><span class="keyword">use</span> <span class="title">yii</span>\<span class="title">db</span>\<span class="title">ActiveRecord</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Customer</span> <span class="keyword">extends</span> <span class="title">ActiveRecord</span></span>&#123;</div><div class="line">    <span class="comment">/**</span></div><div class="line">     * <span class="doctag">@return</span> string 返回该AR类关联的数据表名</div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">tableName</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">'customer'</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="访问列数据"><a href="#访问列数据" class="headerlink" title="访问列数据"></a>访问列数据</h3><blockquote>
+<p>AR 把相应数据行的每一个字段映射为 AR 对象的一个个特性变量（Attribute） 一个特性就好像一个普通对象的公共属性一样（public property）。特性变量的名称和对应字段的名称是一样的，且大小姓名。</p>
+<p>使用以下语法读取列的值：</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// "id" 和 "mail" 是 $customer 对象所关联的数据表的对应字段名</span></div><div class="line">$id = $customer-&gt;id;</div><div class="line">$email = $customer-&gt;email;</div><div class="line">要改变列值，只要给关联属性赋新值并保存对象即可：</div><div class="line"></div><div class="line">$customer-&gt;email = <span class="string">'james@example.com'</span>;</div><div class="line">$customer-&gt;save();</div></pre></td></tr></table></figure>
+<h3 id="建立数据库连接"><a href="#建立数据库连接" class="headerlink" title="建立数据库连接"></a>建立数据库连接</h3><blockquote>
+<p>AR 用一个 yiidbConnection 对象与数据库交换数据。默认的，它使用 db 组件作为其连接对象，你可以在应用程序配置文件中设置下 db 组件，就像这样：</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">return</span> [ </div><div class="line">    <span class="string">'components'</span> =&gt; [ </div><div class="line">        <span class="string">'db'</span> =&gt; [ </div><div class="line">            <span class="string">'class'</span> =&gt; <span class="string">'yii\db\Connection'</span>, </div><div class="line">            <span class="string">'dsn'</span> =&gt; <span class="string">'mysql:host=localhost;dbname=testdb'</span>, </div><div class="line">            <span class="string">'username'</span> =&gt; <span class="string">'demo'</span>, </div><div class="line">            <span class="string">'password'</span> =&gt; <span class="string">'demo'</span>, </div><div class="line">        ],</div><div class="line">    ],</div><div class="line">];</div></pre></td></tr></table></figure>
+<blockquote>
+<p>如果在你的应用中应用了不止一个数据库，且你需要给你的 AR 类使用不同的数据库链接（DB connection） ，你可以覆盖掉 yiidbActiveRecord::getDb() 方法：</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Customer</span> <span class="keyword">extends</span> <span class="title">ActiveRecord</span></span>&#123;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">getDb</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> \Yii::$app-&gt;db2;  <span class="comment">// 使用名为 "db2" 的应用组件</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="查询数据"><a href="#查询数据" class="headerlink" title="查询数据"></a>查询数据</h3><blockquote>
+<p>AR 提供了两种方法来构建 DB 查询并向 AR 实例里填充数据：</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">yiidbActiveRecord::find()</div><div class="line">yiidbActiveRecord::findBySql()</div></pre></td></tr></table></figure>
+<blockquote>
+<p>以上两个方法都会返回 yiidbActiveQuery 实例，该类继承自yiidbQuery， 因此，他们都支持同一套灵活且强大的 DB 查询方法，如where()，join()，orderBy()，等等。</p>
+<p>下面的这些案例展示了一些可能的玩法：</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 取回所有活跃客户(状态为 *active* 的客户）并以他们的 ID 排序：</span></div><div class="line">$customers = Customer::find()</div><div class="line">    -&gt;where([<span class="string">'status'</span> =&gt; Customer::STATUS_ACTIVE])</div><div class="line">    -&gt;orderBy(<span class="string">'id'</span>)</div><div class="line">    -&gt;all();</div><div class="line"></div><div class="line"><span class="comment">// 返回ID为1的客户：</span></div><div class="line">$customer = Customer::find()</div><div class="line">    -&gt;where([<span class="string">'id'</span> =&gt; <span class="number">1</span>])</div><div class="line">    -&gt;one();</div><div class="line"></div><div class="line"><span class="comment">// 取回活跃客户的数量：</span></div><div class="line">$count = Customer::find()</div><div class="line">    -&gt;where([<span class="string">'status'</span> =&gt; Customer::STATUS_ACTIVE])</div><div class="line">    -&gt;count();</div><div class="line"></div><div class="line"><span class="comment">// 以客户ID索引结果集：</span></div><div class="line"><span class="comment">// $customers 数组以 ID 为索引</span></div><div class="line">$customers = Customer::find()-&gt;indexBy(<span class="string">'id'</span>)-&gt;all();</div><div class="line"></div><div class="line"><span class="comment">// 用原生 SQL 语句检索客户：</span></div><div class="line">$sql = <span class="string">'SELECT * FROM customer'</span>;</div><div class="line">$customers = Customer::findBySql($sql)-&gt;all();</div></pre></td></tr></table></figure>
+<blockquote>
+<p>小技巧：在上面的代码中，Customer::STATUS_ACTIVE 是一个在 Customer 类里定义的常量。（译注：这种常量的值一般都是tinyint）相较于直接在代码中写死字符串或数字，使用一个更有意义的常量名称是一种更好的编程习惯。</p>
+<p>有两个快捷方法：findOne 和 findAll() 用来返回一个或者一组ActiveRecord实例。前者返回第一个匹配到的实例，后者返回所有。 例如：</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 返回 id 为 1 的客户</span></div><div class="line">$customer = Customer::findOne(<span class="number">1</span>);</div><div class="line"></div><div class="line"><span class="comment">// 返回 id 为 1 且状态为 *active* 的客户</span></div><div class="line">$customer = Customer::findOne([</div><div class="line">    <span class="string">'id'</span> =&gt; <span class="number">1</span>,</div><div class="line">    <span class="string">'status'</span> =&gt; Customer::STATUS_ACTIVE,</div><div class="line">]);</div><div class="line"></div><div class="line"><span class="comment">// 返回id为1、2、3的一组客户</span></div><div class="line">$customers = Customer::findAll([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]);</div><div class="line"></div><div class="line"><span class="comment">// 返回所有状态为 "deleted" 的客户</span></div><div class="line">$customer = Customer::findAll([</div><div class="line">    <span class="string">'status'</span> =&gt; Customer::STATUS_DELETED,</div><div class="line">]);</div></pre></td></tr></table></figure>
+<h4 id="以数组形式获取数据"><a href="#以数组形式获取数据" class="headerlink" title="以数组形式获取数据"></a>以数组形式获取数据</h4><blockquote>
+<p>有时候，我们需要处理很大量的数据，这时可能需要用一个数组来存储取到的数据， 从而节省内存。</p>
+<p>你可以用 asArray() 函数做到这一点：</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 以数组而不是对象形式取回客户信息：</span></div><div class="line">$customers = Customer::find()</div><div class="line">    -&gt;asArray()</div><div class="line">    -&gt;all();</div><div class="line"><span class="comment">// $customers 的每个元素都是键值对数组</span></div></pre></td></tr></table></figure>
+<h4 id="批量获取数据"><a href="#批量获取数据" class="headerlink" title="批量获取数据"></a>批量获取数据</h4><blockquote>
+<p>在 Query Builder（查询构造器） 里，我们已经解释了当需要从数据库中查询大量数据时，你可以用 batch query（批量查询）来限制内存的占用。</p>
+<p>你可能也想在 AR 里使用相同的技巧，比如这样……</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 一次提取 10 个客户信息</span></div><div class="line"><span class="keyword">foreach</span> (Customer::find()-&gt;batch(<span class="number">10</span>) <span class="keyword">as</span> $customers) &#123;</div><div class="line">    <span class="comment">// $customers 是 10 个或更少的客户对象的数组</span></div><div class="line">&#125;</div><div class="line"><span class="comment">// 一次提取 10 个客户并一个一个地遍历处理</span></div><div class="line"><span class="keyword">foreach</span> (Customer::find()-&gt;each(<span class="number">10</span>) <span class="keyword">as</span> $customer) &#123;</div><div class="line">    <span class="comment">// $customer 是一个 ”Customer“ 对象</span></div><div class="line">&#125;</div><div class="line"><span class="comment">// 贪婪加载模式的批处理查询</span></div><div class="line"><span class="keyword">foreach</span> (Customer::find()-&gt;with(<span class="string">'orders'</span>)-&gt;each() <span class="keyword">as</span> $customer) &#123;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="操作数据-CURD"><a href="#操作数据-CURD" class="headerlink" title="操作数据(CURD)"></a>操作数据(CURD)</h4><blockquote>
+<p>AR 提供以下方法插入、更新和删除与 AR 对象关联的那张表中的某一行：</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">yiidbActiveRecord::save()</div><div class="line">yiidbActiveRecord::insert()</div><div class="line">yiidbActiveRecord::update()</div><div class="line">yiidbActiveRecord::delete()</div></pre></td></tr></table></figure>
+<blockquote>
+<p>AR 同时提供了一些静态方法，可以应用在与某 AR 类所关联的整张表上。用这些方法的时候千万要小心，因为他们作用于整张表！比如，deleteAll() 会删除掉表里所有的记录。</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">yiidbActiveRecord::updateCounters()</div><div class="line">yiidbActiveRecord::updateAll()</div><div class="line">yiidbActiveRecord::updateAllCounters()</div><div class="line">yiidbActiveRecord::deleteAll()</div></pre></td></tr></table></figure>
+<blockquote>
+<p>下面的这些例子里，详细展现了如何使用这些方法：</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 插入新客户的记录</span></div><div class="line">$customer = <span class="keyword">new</span> Customer();</div><div class="line">$customer-&gt;name = <span class="string">'James'</span>;</div><div class="line">$customer-&gt;email = <span class="string">'james@example.com'</span>;</div><div class="line">$customer-&gt;save();  <span class="comment">// 等同于 $customer-&gt;insert();</span></div><div class="line"></div><div class="line"><span class="comment">// 更新现有客户记录</span></div><div class="line">$customer = Customer::findOne($id);</div><div class="line">$customer-&gt;email = <span class="string">'james@example.com'</span>;</div><div class="line">$customer-&gt;save();  <span class="comment">// 等同于 $customer-&gt;update();</span></div><div class="line"></div><div class="line"><span class="comment">// 删除已有客户记录</span></div><div class="line">$customer = Customer::findOne($id);</div><div class="line">$customer-&gt;delete();</div><div class="line"></div><div class="line"><span class="comment">// 删除多个年龄大于20，性别为男（Male）的客户记录</span></div><div class="line">Customer::deleteAll(</div><div class="line">    <span class="string">'age &gt; :age AND gender = :gender'</span>, </div><div class="line">    [<span class="string">':age'</span> =&gt; <span class="number">20</span>, <span class="string">':gender'</span> =&gt; <span class="string">'M'</span>]</div><div class="line">);</div><div class="line"></div><div class="line"><span class="comment">// 所有客户的age（年龄）字段加1：</span></div><div class="line">Customer::updateAllCounters([<span class="string">'age'</span> =&gt; <span class="number">1</span>]);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>须知：save() 方法会调用 insert() 和 update() 中的一个， 用哪个取决于当前 AR 对象是不是新对象（在函数内部，他会检查 yiidbActiveRecord::isNewRecord 的值）。</p>
+<p>若 AR 对象是由 new 操作符 初始化出来的，save() 方法会在表里插入一条数据； 如果一个 AR 是由 find() 方法获取来的， 则 save() 会更新表里的对应行记录。</p>
+</blockquote>
+<h4 id="数据输入与有效性验证"><a href="#数据输入与有效性验证" class="headerlink" title="数据输入与有效性验证"></a>数据输入与有效性验证</h4><blockquote>
+<p>由于AR继承自yiibaseModel，所以它同样也支持Model的数据输入、验证等特性。</p>
+<p>例如，你可以声明一个rules方法用来覆盖掉yiibaseModel::rules()里的；你也可以给AR实例批量赋值；你也可以通过调用yiibaseModel::validate()执行数据验证。</p>
+<p>当你调用 save()、insert()、update() 这三个方法时，会自动调用yiibaseModel::validate()方法。如果验证失败，数据将不会保存进数据库。</p>
+<p>下面的例子演示了如何使用AR 获取/验证用户输入的数据并将他们保存进数据库：</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 新建一条记录</span></div><div class="line">$model = <span class="keyword">new</span> Customer;</div><div class="line"><span class="keyword">if</span> ($model-&gt;load(Yii::$app-&gt;request-&gt;post()) &amp;&amp; $model-&gt;save()) &#123;</div><div class="line">    <span class="comment">// 获取用户输入的数据，验证并保存</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 更新主键为$id的AR</span></div><div class="line">$model = Customer::findOne($id);</div><div class="line"><span class="keyword">if</span> ($model === <span class="keyword">null</span>) &#123;</div><div class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> NotFoundHttpException;</div><div class="line">&#125;</div><div class="line"><span class="keyword">if</span> ($model-&gt;load(Yii::$app-&gt;request-&gt;post()) &amp;&amp; $model-&gt;save()) &#123;</div><div class="line">    <span class="comment">// 获取用户输入的数据，验证并保存</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="读取默认值"><a href="#读取默认值" class="headerlink" title="读取默认值"></a>读取默认值</h4><blockquote>
+<p>你的表列也许定义了默认值。有时候，你可能需要在使用web表单的时候给AR预设一些值。</p>
+<p>如果你需要这样做，可以在显示表单内容前通过调用loadDefaultValues()方法来实现：</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">     $customer = <span class="keyword">new</span> Customer();</div><div class="line">     $customer-&gt;loadDefaultValues(); <span class="comment">// ... 渲染 $customer 的 HTML 表单 ...</span></div><div class="line"><span class="meta">?&gt;</span> </div><div class="line">`</div></pre></td></tr></table></figure>
+<p>AR的生命周期</p>
+<blockquote>
+<p>理解AR的生命周期对于你操作数据库非常重要。<br>生命周期通常都会有些典型的事件存在。<br>对于开发AR的behaviors来说非常有用。</p>
+<p>当你实例化一个新的AR对象时，我们将获得如下的生命周期：</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">1. constructor</div><div class="line">2. yii\db\ActiveRecord::init(): 会触发一个 yii\db\ActiveRecord::EVENT_INIT 事件</div><div class="line">当你通过 yiidbActiveRecord::find() 方法查询数据时，每个AR实例都将有以下生命周期：</div><div class="line"></div><div class="line">1. constructor</div><div class="line">2. yii\db\ActiveRecord::init(): 会触发一个 yii\db\ActiveRecord::EVENT_INIT 事件</div><div class="line">3. yii\db\ActiveRecord::afterFind(): 会触发一个 yii\db\ActiveRecord::EVENT_AFTER_FIND 事件</div><div class="line">当通过 yiidbActiveRecord::save() 方法写入或者更新数据时, 我们将获得如下生命周期：</div><div class="line"></div><div class="line">1. yii\db\ActiveRecord::beforeValidate(): 会触发一个 yii\db\ActiveRecord::EVENT_BEFORE_VALIDATE 事件</div><div class="line">2. yii\db\ActiveRecord::afterValidate(): 会触发一个 yii\db\ActiveRecord::EVENT_AFTER_VALIDATE 事件</div><div class="line">3. yii\db\ActiveRecord::beforeSave(): 会触发一个 yii\db\ActiveRecord::EVENT_BEFORE_INSERT 或 yii\db\ActiveRecord::EVENT_BEFORE_UPDATE 事件</div><div class="line">4. 执行实际的数据写入或更新</div><div class="line">5. yii\db\ActiveRecord::afterSave(): 会触发一个 yii\db\ActiveRecord::EVENT_AFTER_INSERT 或 yii\db\ActiveRecord::EVENT_AFTER_UPDATE 事件</div><div class="line">最后，当调用 yiidbActiveRecord::delete() 删除数据时, 我们将获得如下生命周期：</div><div class="line"></div><div class="line">1. yii\db\ActiveRecord::beforeDelete(): 会触发一个 yii\db\ActiveRecord::EVENT_BEFORE_DELETE 事件</div><div class="line">2. 执行实际的数据删除</div><div class="line">3. yii\db\ActiveRecord::afterDelete(): 会触发一个 yii\db\ActiveRecord::EVENT_AFTER_DELETE 事件</div></pre></td></tr></table></figure>
+<h4 id="查询关联的数据"><a href="#查询关联的数据" class="headerlink" title="查询关联的数据"></a>查询关联的数据</h4><blockquote>
+<p>使用 AR 方法也可以查询数据表的关联数据（如，选出表A的数据可以拉出表B的关联数据）。有了 AR， 返回的关联数据连接就像连接关联主表的 AR 对象的属性一样。建立关联关系后，通过 $customer-&gt;orders 可以获取 一个 Order 对象的数组，该数组代表当前客户对象的订单集。定义关联关系使用一个可以返回 yiidbActiveQuery 对象的 getter 方法， yiidbActiveQuery对象有关联上下文的相关信息，因此可以只查询关联数据。例如：</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Customer</span> <span class="keyword">extends</span> \<span class="title">yii</span>\<span class="title">db</span>\<span class="title">ActiveRecord</span></span>&#123; </div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getOrders</span><span class="params">()</span> </span>&#123; </div><div class="line">        <span class="comment">// 客户和订单通过 Order.customer_id -&gt; id 关联建立一对多关系 </span></div><div class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;hasMany(Order::className(), [<span class="string">'customer_id'</span> =&gt; <span class="string">'id'</span>]); </div><div class="line">    &#125; </div><div class="line">&#125; </div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Order</span> <span class="keyword">extends</span> \<span class="title">yii</span>\<span class="title">db</span>\<span class="title">ActiveRecord</span></span>&#123; </div><div class="line">    <span class="comment">// 订单和客户通过 Customer.id -&gt; customer_id 关联建立一对一关系 </span></div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getCustomer</span><span class="params">()</span> </span>&#123; </div><div class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;hasOne(Customer::className(), [<span class="string">'id'</span> =&gt; <span class="string">'customer_id'</span>]); </div><div class="line">    &#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>以上使用了 yiidbActiveRecord::hasMany() 和 yiidbActiveRecord::hasOne() 方法。以上两例分别是关联数据多对一关系和一对一关系的建模范例。</p>
+<p>如，一个客户有很多订单，一个订单只归属一个客户。两个方法都有两个参数并返回 yiidbActiveQuery 对象。$class：关联模型类名，它必须是一个完全合格的类名。$link: 两个表的关联列，应为键值对数组的形式。 数组的键是 $class 关联表的列名， 而数组值是关联类 $class 的列名。 </p>
+<p>基于表外键定义关联关系是最佳方法。建立关联关系后，获取关联数据和获取组件属性一样简单， 执行以下相应getter方法即可：</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 取得客户的订单</span></div><div class="line">$customer = Customer::findOne(<span class="number">1</span>);</div><div class="line">$orders = $customer-&gt;orders; <span class="comment">// $orders 是 Order 对象数组</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>以上代码实际执行了以下两条 SQL 语句：</p>
+</blockquote>
+<p>SELECT <em> FROM customer WHERE id=1;<br>SELECT </em> FROM order WHERE customer_id=1;<br>提示:再次用表达式 $customer-&gt;orders将不会执行第二次 SQL 查询， SQL 查询只在该表达式第一次使用时执行。</p>
+<p>数据库访问只返回缓存在内部前一次取回的结果集，如果你想查询新的 关联数据，先要注销现有结果集：<br>unset($customer-&gt;orders);。<br>有时候需要在关联查询中传递参数，如不需要返回客户全部订单， 只需要返回购买金额超过设定值的大订单， 通过以下getter方法声明一个关联数据 bigOrders ：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Customer</span> <span class="keyword">extends</span> \<span class="title">yii</span>\<span class="title">db</span>\<span class="title">ActiveRecord</span></span>&#123; </div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getBigOrders</span><span class="params">($threshold = <span class="number">100</span>)</span> </span>&#123; </div><div class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;hasMany(Order::className(), [<span class="string">'customer_id'</span> =&gt; <span class="string">'id'</span>]) </div><div class="line">            -&gt;where(<span class="string">'subtotal &gt; :threshold'</span>, [<span class="string">':threshold'</span> =&gt; $threshold]) </div><div class="line">            -&gt;orderBy(<span class="string">'id'</span>); </div><div class="line">    &#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>hasMany() 返回 yiidbActiveQuery 对象，该对象允许你通过 yiidbActiveQuery 方法定制查询。<br>如上声明后，执行 $customer-&gt;bigOrders 就返回 总额大于100的订单。使用以下代码更改设定值：</p>
+<p>$orders = $customer-&gt;getBigOrders(200)-&gt;all();<br>注意：关联查询返回的是 yiidbActiveQuery 的实例，如果像特性（如类属性）那样连接关联数据， 返回的结果是关联查询的结果，即 yiidbActiveRecord 的实例， 或者是数组，或者是 null ，取决于关联关系的多样性。<br>如，$customer-&gt;getOrders() 返回ActiveQuery 实例，而 $customer-&gt;orders 返回Order 对象数组 （如果查询结果为空则返回空数组）。<br>中间关联表<br>有时，两个表通过中间表关联，定义这样的关联关系， 可以通过调用 yiidbActiveQuery::via() 方法或 yiidbActiveQuery::viaTable() 方法来定制 yiidbActiveQuery 对象 。</p>
+<p>举例而言，如果 order 表和 item 表通过中间表 order_item 关联起来， 可以在 Order 类声明 items 关联关系取代中间表：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Order</span> <span class="keyword">extends</span> \<span class="title">yii</span>\<span class="title">db</span>\<span class="title">ActiveRecord</span></span>&#123; </div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getItems</span><span class="params">()</span> </span>&#123; </div><div class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;hasMany(Item::className(), [<span class="string">'id'</span> =&gt; <span class="string">'item_id'</span>]) </div><div class="line">            -&gt;viaTable(<span class="string">'order_item'</span>, [<span class="string">'order_id'</span> =&gt; <span class="string">'id'</span>]); </div><div class="line">    &#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>两个方法是相似的，除了 yiidbActiveQuery::via() 方法的第一个参数是使用 AR 类中定义的关联名。 以上方法取代了中间表，等价于：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Order</span> <span class="keyword">extends</span> \<span class="title">yii</span>\<span class="title">db</span>\<span class="title">ActiveRecord</span></span>&#123;</div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getOrderItems</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;hasMany(OrderItem::className(), [<span class="string">'order_id'</span> =&gt; <span class="string">'id'</span>]);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getItems</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;hasMany(Item::className(), [<span class="string">'id'</span> =&gt; <span class="string">'item_id'</span>])</div><div class="line">            -&gt;via(<span class="string">'orderItems'</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>延迟加载和即时加载（又称惰性加载与贪婪加载）<br>如前所述，当你第一次连接关联对象时， AR 将执行一个数据库查询 来检索请求数据并填充到关联对象的相应属性。如果再次连接相同的关联对象，不再执行任何查询语句，这种数据库查询的执行方法称为“延迟加载”。<br>如：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// SQL executed: SELECT * FROM customer WHERE id=1</span></div><div class="line">$customer = Customer::findOne(<span class="number">1</span>);</div><div class="line"><span class="comment">// SQL executed: SELECT * FROM order WHERE customer_id=1</span></div><div class="line">$orders = $customer-&gt;orders;</div><div class="line"><span class="comment">// 没有 SQL 语句被执行</span></div><div class="line">$orders2 = $customer-&gt;orders; <span class="comment">//取回上次查询的缓存数据延迟加载非常实用，但是，在以下场景中使用延迟加载会遭遇性能</span></div></pre></td></tr></table></figure>
+<p>问题：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// SQL executed: SELECT * FROM customer LIMIT 100</span></div><div class="line">$customers = Customer::find()-&gt;limit(<span class="number">100</span>)-&gt;all();</div><div class="line"></div><div class="line"><span class="keyword">foreach</span> ($customers <span class="keyword">as</span> $customer) &#123;</div><div class="line">    <span class="comment">// SQL executed: SELECT * FROM order WHERE customer_id=...</span></div><div class="line">    $orders = $customer-&gt;orders;</div><div class="line">    <span class="comment">// ...处理 $orders...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>假设数据库查出的客户超过100个，以上代码将执行多少条 SQL 语句？ 101 条！第一条 SQL 查询语句取回100个客户，然后， 每个客户要执行一条 SQL 查询语句以取回该客户的所有订单。</p>
+<p>为解决以上性能问题，可以通过调用 yiidbActiveQuery::with() 方法使用即时加载解决。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// SQL executed: SELECT * FROM customer LIMIT 100;</span></div><div class="line"><span class="comment">// SELECT * FROM orders WHERE customer_id IN (1,2,...)</span></div><div class="line">$customers = Customer::find()-&gt;limit(<span class="number">100</span>)</div><div class="line">    -&gt;with(<span class="string">'orders'</span>)-&gt;all();</div><div class="line"></div><div class="line"><span class="keyword">foreach</span> ($customers <span class="keyword">as</span> $customer) &#123;</div><div class="line">    <span class="comment">// 没有 SQL 语句被执行</span></div><div class="line">    $orders = $customer-&gt;orders;</div><div class="line">    <span class="comment">// ...处理 $orders...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如你所见，同样的任务只需要两个 SQL 语句。</p>
+<p>须知：通常，即时加载 N 个关联关系而通过 via() 或者 viaTable() 定义了 M 个关联关系， 将有 1+M+N 条 SQL 查询语句被执行：一个查询取回主表行数， 一个查询给每一个 (M) 中间表，一个查询给每个 (N) 关联表。<br>注意:当用即时加载定制 select() 时，确保连接 到关联模型的列都被包括了，否则，关联模型不会载入。如：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$orders = Order::find()</div><div class="line">    -&gt;select([<span class="string">'id'</span>, <span class="string">'amount'</span>])</div><div class="line">    -&gt;with(<span class="string">'customer'</span>)</div><div class="line">    -&gt;all();</div><div class="line">     </div><div class="line"><span class="comment">// $orders[0]-&gt;customer 总是空的，使用以下代码解决这个</span></div></pre></td></tr></table></figure>
+<p>问题：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$orders = Order::find()</div><div class="line">    -&gt;select([<span class="string">'id'</span>, <span class="string">'amount'</span>, <span class="string">'customer_id'</span>])</div><div class="line">    -&gt;with(<span class="string">'customer'</span>)</div><div class="line">    -&gt;all();</div></pre></td></tr></table></figure>
+<p>有时候，你想自由的自定义关联查询，延迟加载和即时加载都可以实现，如：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">$customer = Customer::findOne(<span class="number">1</span>);</div><div class="line"><span class="comment">// 延迟加载: SELECT * FROM order WHERE customer_id=1 AND subtotal&gt;100</span></div><div class="line">$orders = $customer-&gt;getOrders()-&gt;where(<span class="string">'subtotal&gt;100'</span>)-&gt;all();</div><div class="line"></div><div class="line"><span class="comment">// 即时加载: SELECT * FROM customer LIMIT 100</span></div><div class="line"><span class="comment">//          SELECT * FROM order WHERE customer_id IN (1,2,...) AND subtotal&gt;100</span></div><div class="line">$customers = Customer::find()</div><div class="line">    -&gt;limit(<span class="number">100</span>)</div><div class="line">    -&gt;with([</div><div class="line">        <span class="string">'orders'</span> =&gt; <span class="function"><span class="keyword">function</span><span class="params">($query)</span> </span>&#123;</div><div class="line">            $query-&gt;andWhere(<span class="string">'subtotal&gt;100'</span>);</div><div class="line">        &#125;,</div><div class="line">    ])</div><div class="line">    -&gt;all();</div></pre></td></tr></table></figure>
+<p>逆关系<br>关联关系通常成对定义，如：Customer 可以有个名为 orders 关联项， 而 Order 也有个名为customer 的关联项：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Customer</span> <span class="keyword">extends</span> <span class="title">ActiveRecord</span></span>&#123; </div><div class="line">    .... </div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getOrders</span><span class="params">()</span> </span>&#123; </div><div class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;hasMany(Order::className(), [<span class="string">'customer_id'</span> =&gt; <span class="string">'id'</span>]); </div><div class="line">    &#125; </div><div class="line">&#125; </div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Order</span> <span class="keyword">extends</span> <span class="title">ActiveRecord</span></span>&#123; </div><div class="line">    .... </div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getCustomer</span><span class="params">()</span> </span>&#123; </div><div class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;hasOne(Customer::className(), [<span class="string">'id'</span> =&gt; <span class="string">'customer_id'</span>]); </div><div class="line">    &#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果我们执行以下查询，可以发现订单的 customer 和 找到这些订单的客户对象并不是同一个。</p>
+<p>连接 customer-&gt;orders 将触发一条 SQL 语句 而连接一个订单的 customer 将触发另一条 SQL 语句。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// SELECT * FROM customer WHERE id=1</span></div><div class="line">$customer = Customer::findOne(<span class="number">1</span>);</div><div class="line"><span class="comment">// 输出 "不相同"</span></div><div class="line"><span class="comment">// SELECT * FROM order WHERE customer_id=1</span></div><div class="line"><span class="comment">// SELECT * FROM customer WHERE id=1</span></div><div class="line"><span class="keyword">if</span> ($customer-&gt;orders[<span class="number">0</span>]-&gt;customer === $customer) &#123;</div><div class="line">    <span class="keyword">echo</span> <span class="string">'相同'</span>;</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="keyword">echo</span> <span class="string">'不相同'</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>为避免多余执行的后一条语句，我们可以为 customer或 orders 关联关系定义相反的关联关系，通过调用 yiidbActiveQuery::inverseOf() 方法可以实现。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Customer</span> <span class="keyword">extends</span> <span class="title">ActiveRecord</span></span>&#123; </div><div class="line">    .... </div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getOrders</span><span class="params">()</span> </span>&#123; </div><div class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;hasMany(Order::className(), [<span class="string">'customer_id'</span> =&gt; <span class="string">'id'</span>])</div><div class="line">            -&gt;inverseOf(<span class="string">'customer'</span>); </div><div class="line">    &#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>现在我们同样执行上面的查询，我们将得到：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// SELECT * FROM customer WHERE id=1</span></div><div class="line">$customer = Customer::findOne(<span class="number">1</span>);</div><div class="line"><span class="comment">// 输出相同</span></div><div class="line"><span class="comment">// SELECT * FROM order WHERE customer_id=1</span></div><div class="line"><span class="keyword">if</span> ($customer-&gt;orders[<span class="number">0</span>]-&gt;customer === $customer) &#123;</div><div class="line">    <span class="keyword">echo</span> <span class="string">'相同'</span>;</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="keyword">echo</span> <span class="string">'不相同'</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>以上我们展示了如何在延迟加载中使用相对关联关系， 相对关系也可以用在即时加载中：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// SELECT * FROM customer</span></div><div class="line"><span class="comment">// SELECT * FROM order WHERE customer_id IN (1, 2, ...)</span></div><div class="line">$customers = Customer::find()-&gt;with(<span class="string">'orders'</span>)-&gt;all();</div><div class="line"><span class="comment">// 输出相同</span></div><div class="line"><span class="keyword">if</span> ($customers[<span class="number">0</span>]-&gt;orders[<span class="number">0</span>]-&gt;customer === $customers[<span class="number">0</span>]) &#123;</div><div class="line">    <span class="keyword">echo</span> <span class="string">'相同'</span>;</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="keyword">echo</span> <span class="string">'不相同'</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>注意:相对关系不能在包含中间表的关联关系中定义。<br>即是，如果你的关系是通过yii\db\ActiveQuery::via() 或 yii\db\ActiveQuery::viaTable()方法定义的， 就不能调用yii\db\ActiveQuery::inverseOf()方法了。<br>JOIN 类型关联查询<br>使用关系数据库时，普遍要做的是连接多个表并明确地运用各种 JOIN 查询。<br>JOIN SQL语句的查询条件和参数，使用 yiidbActiveQuery::joinWith() 可以重用已定义关系并调用 而不是使用 yiidbActiveQuery::join() 来实现目标。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 查找所有订单并以客户 ID 和订单 ID 排序，并贪婪加载 "customer" 表</span></div><div class="line">$orders = Order::find()</div><div class="line">    -&gt;joinWith(<span class="string">'customer'</span>)</div><div class="line">    -&gt;orderBy(<span class="string">'customer.id, order.id'</span>)</div><div class="line">    -&gt;all();</div><div class="line"><span class="comment">// 查找包括书籍的所有订单，并以 `INNER JOIN` 的连接方式即时加载 "books" 表</span></div><div class="line">$orders = Order::find()</div><div class="line">    -&gt;innerJoinWith(<span class="string">'books'</span>)</div><div class="line">    -&gt;all();</div></pre></td></tr></table></figure>
+<p>以上，方法 yiidbActiveQuery::innerJoinWith() 是访问 INNER JOIN 类型的 yiidbActiveQuery::joinWith() 的快捷方式。</p>
+<p>可以连接一个或多个关联关系，可以自由使用查询条件到关联查询， 也可以嵌套连接关联查询。如：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 连接多重关系</span></div><div class="line"><span class="comment">// 找出24小时内注册客户包含书籍的订单</span></div><div class="line">$orders = Order::find()</div><div class="line">    -&gt;innerJoinWith([</div><div class="line">        <span class="string">'books'</span>,</div><div class="line">        <span class="string">'customer'</span> =&gt; <span class="function"><span class="keyword">function</span> <span class="params">($query)</span> </span>&#123;</div><div class="line">            $query-&gt;where(<span class="string">'customer.created_at &gt; '</span> . (time() - <span class="number">24</span> * <span class="number">3600</span>));</div><div class="line">        &#125;</div><div class="line">    ])</div><div class="line">    -&gt;all();</div><div class="line">    </div><div class="line"><span class="comment">// 连接嵌套关系：连接 books 表及其 author 列</span></div><div class="line">$orders = Order::find()</div><div class="line">    -&gt;joinWith(<span class="string">'books.author'</span>)</div><div class="line">    -&gt;all();</div></pre></td></tr></table></figure>
+<p>代码背后， Yii 先执行一条 JOIN SQL 语句把满足 JOIN SQL 语句查询条件的主要模型查出， 然后为每个关系执行一条查询语句， bing填充相应的关联记录。<br>yii\db\ActiveQuery::joinWith() 和 yii\db\ActiveQuery::with() 的区别是:<br>前者连接主模型类和关联模型类的数据表来检索主模型， 而后者只查询和检索主模型类。 </p>
+<p>检索主模型由于这个区别，你可以应用只针对一条 JOIN SQL 语句起效的查询条件。 </p>
+<p>如，通过关联模型的查询条件过滤主模型，如前例， 可以使用关联表的列来挑选主模型数据，<br>当使用 yii\db\ActiveQuery::joinWith() 方法时可以响应没有歧义的列名。</p>
+<p>当连接关联关系时，关联关系默认使用即时加载。</p>
+<p>你可以 通过传参数 $eagerLoading 来决定在指定关联查询中是否使用即时加载。</p>
+<p>默认 yii\db\ActiveQuery::joinWith() 使用左连接来连接关联表。 </p>
+<p>你也可以传 $joinType 参数来定制连接类型。 </p>
+<p>你也可以使用 yii\db\ActiveQuery::innerJoinWith()。<br>以下是 INNER JOIN 的简短例子：</p>
+<p>// 查找包括书籍的所有订单，但 “books” 表不使用即时加载<br>$orders = Order::find()<br>    -&gt;innerJoinWith(‘books’, false)<br>    -&gt;all();</p>
+<p>// 等价于：<br>$orders = Order::find()<br>    -&gt;joinWith(‘books’, false, ‘INNER JOIN’)<br>    -&gt;all();<br>有时连接两个表时，需要在关联查询的 ON 部分指定额外条件。<br>这可以通过调用 yiidbActiveQuery::onCondition() 方法实现：</p>
+<p>class User extends ActiveRecord{<br>    public function getBooks() {<br>        return $this-&gt;hasMany(Item::className(), [‘owner_id’ =&gt; ‘id’])<br>            -&gt;onCondition([‘category_id’ =&gt; 1]);<br>    }<br>}<br>在上面， yii\db\ActiveRecord::hasMany() 方法回传了一个 yii\db\ActiveQuery 对象， 当你用 yii\db\ActiveQuery::joinWith() 执行一条查询时，取决于正被调用的是哪个 yii\db\ActiveQuery::onCondition()， 返回 category_id 为 1 的 items。<br>当你用 yiidbActiveQuery::joinWith() 进行一次查询时，“on-condition”条件会被放置在相应查询语句的 ON 部分， 如：</p>
+<p>// SELECT user.<em> FROM user LEFT JOIN item ON item.owner_id=user.id AND category_id=1<br>// SELECT </em> FROM item WHERE owner_id IN (…) AND category_id=1 </p>
+<p>$users = User::find()-&gt;joinWith(‘books’)-&gt;all();<br>注意：如果通过 yiidbActiveQuery::with() 进行贪婪加载或使用惰性加载的话，则 on 条件会被放置在对应 SQL语句的 WHERE 部分。 因为，此时此处并没有发生 JOIN 查询。比如：</p>
+<p>// SELECT * FROM user WHERE id=10<br>$user = User::findOne(10);</p>
+<p>// SELECT * FROM item WHERE owner_id=10 AND category_id=1<br>$books = $user-&gt;books;<br>关联表操作<br>AR 提供了下面两个方法用来建立和解除两个关联对象之间的关系：</p>
+<p>yiidbActiveRecord::link()<br>yiidbActiveRecord::unlink()<br>例如，给定一个customer和order对象，我们可以通过下面的代码使得customer对象拥有order对象：</p>
+<p>$customer = Customer::findOne(1); $order = new Order(); $order-&gt;subtotal = 100; $customer-&gt;link(‘orders’, $order);<br>yiidbActiveRecord::link() 调用上述将设置 customer_id 的顺序是 $customer 的主键值，然后调用 yiidbActiveRecord::save() 要将顺序保存到数据库中。<br>作用域<br>当你调用yiidbActiveRecord::find() 或 yiidbActiveRecord::findBySql()方法时，将会返回一个yiidbActiveQuery实例。</p>
+<p>之后，你可以调用其他查询方法，如 yiidbActiveQuery::where()，yiidbActiveQuery::orderBy(), 进一步的指定查询条件。</p>
+<p>有时候你可能需要在不同的地方使用相同的查询方法。如果出现这种情况，你应该考虑定义所谓的作用域。</p>
+<p>作用域是本质上要求一组的查询方法来修改查询对象的自定义查询类中定义的方法。</p>
+<p>之后你就可以像使用普通方法一样使用作用域。只需两步即可定义一个作用域。</p>
+<p>首先给你的model创建一个自定义的查询类，在此类中定义的所需的范围方法。</p>
+<blockquote>
+<p>例如，给Comment模型创建一个 CommentQuery类，然后在CommentQuery类中定义一个active()的方法为作用域，像下面的代码：</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">namespace</span> <span class="title">app</span>\<span class="title">models</span>; <span class="keyword">use</span> <span class="title">yii</span>\<span class="title">db</span>\<span class="title">ActiveQuery</span>; </div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">CommentQuery</span> <span class="keyword">extends</span> <span class="title">ActiveQuery</span></span>&#123; </div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">active</span><span class="params">($state = true)</span> </span>&#123; </div><div class="line">        <span class="keyword">$this</span>-&gt;andWhere([<span class="string">'active'</span> =&gt; $state]); </div><div class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>; </div><div class="line">    &#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>重点:类必须继承 yiidbActiveQuery (或者是其他的 ActiveQuery ，比如 yiimongodbActiveQuery)。必须是一个public类型的方法且必须返回 $this 实现链式操作。可以传入参数。检查 yiidbActiveQuery 对于修改查询条件是非常有用的方法。其次，覆盖yiidbActiveRecord::find() 方法使其返回自定义的查询对象而不是常规的yiidbActiveQuery。</p>
+<p>对于上述例子，你需要编写如下代码：</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">namespace</span> <span class="title">app</span>\<span class="title">models</span>; </div><div class="line"></div><div class="line"><span class="keyword">use</span> <span class="title">yii</span>\<span class="title">db</span>\<span class="title">ActiveRecord</span>; </div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Comment</span> <span class="keyword">extends</span> <span class="title">ActiveRecord</span></span>&#123; </div><div class="line">    <span class="comment">/** * <span class="doctag">@inheritdoc</span> * <span class="doctag">@return</span> CommentQuery */</span> </div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">find</span><span class="params">()</span> </span>&#123; </div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> CommentQuery(get_called_class()); </div><div class="line">    &#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>就这样，现在你可以使用自定义的作用域方法了：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$comments = Comment::find()</div><div class="line">    -&gt;active()</div><div class="line">    -&gt;all(); </div><div class="line"></div><div class="line">$inactiveComments = Comment::find()</div><div class="line">    -&gt;active(<span class="keyword">false</span>)</div><div class="line">    -&gt;all();</div></pre></td></tr></table></figure>
+<p>你也能在定义的关联里使用作用域方法，比如：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Post</span> <span class="keyword">extends</span> \<span class="title">yii</span>\<span class="title">db</span>\<span class="title">ActiveRecord</span></span>&#123; </div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getActiveComments</span><span class="params">()</span> </span>&#123; </div><div class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;hasMany(Comment::className(), [<span class="string">'post_id'</span> =&gt; <span class="string">'id'</span>])</div><div class="line">            -&gt;active(); </div><div class="line">    &#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>或者在执行关联查询的时候使用（on-the-fly 是啥？）：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$posts = Post::find()</div><div class="line">    -&gt;with([ <span class="string">'comments'</span> =&gt; <span class="function"><span class="keyword">function</span><span class="params">($q)</span> </span>&#123; $q-&gt;active(); &#125; ])</div><div class="line">    -&gt;all();</div></pre></td></tr></table></figure>
+<h4 id="默认作用域"><a href="#默认作用域" class="headerlink" title="默认作用域"></a>默认作用域</h4><p>如果你之前用过 Yii 1.1 就应该知道默认作用域的概念。</p>
+<p>一个默认的作用域可以作用于所有查询。</p>
+<p>你可以很容易的通过重写yiidbActiveRecord::find()方法来定义一个默认作用域，例如：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">find</span><span class="params">()</span></span>&#123; </div><div class="line">    <span class="keyword">return</span> <span class="keyword">parent</span>::find()</div><div class="line">        -&gt;where([<span class="string">'deleted'</span> =&gt; <span class="keyword">false</span>]); </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p> 注意，你之后所有的查询都不能用 yii\db\ActiveQuery::where()，但是可以用 yii\db\ActiveQuery::andWhere() 和 yii\db\ActiveQuery::orWhere()，他们不会覆盖掉默认作用域。</p>
+<p>（译注：如果你要使用默认作用域，就不能在 xxx::find()后使用where()方法，你必须使用andXXX()或者orXXX()系的方法，否则默认作用域不会起效果，至于原因，打开where()方法的代码一看便知）</p>
+</blockquote>
+<h4 id="事务操作"><a href="#事务操作" class="headerlink" title="事务操作"></a>事务操作</h4><blockquote>
+<p>当执行几个相关联的数据库操作的时候</p>
+</blockquote>
+<p>TODO: FIXME: WIP, TBD, <a href="https://github.com/yiisoft/yii2/issues/226" target="_blank" rel="external">https://github.com/yiisoft/yii2/issues/226</a><br>, yii\db\ActiveRecord::afterSave(), yii\db\ActiveRecord::beforeDelete() and/or yii\db\ActiveRecord::afterDelete()<br>生命周期周期方法(life cycle methods 我觉得这句翻译成“模板方法”会不会更好点？)。</p>
+<blockquote>
+<p>开发者可以通过重写yiidbActiveRecord::save()方法然后在控制器里使用事务操作，严格地说是似乎不是一个好的做法 （召回”瘦控制器 / 肥模型”基本规则）。</p>
+<p>这些方法在这里(如果你不明白自己实际在干什么，请不要使用他们)，Models：</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Feature</span> <span class="keyword">extends</span> \<span class="title">yii</span>\<span class="title">db</span>\<span class="title">ActiveRecord</span></span>&#123; </div><div class="line">    <span class="comment">// ... </span></div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getProduct</span><span class="params">()</span> </span>&#123; </div><div class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;hasOne(Product::className(), [<span class="string">'id'</span> =&gt; <span class="string">'product_id'</span>]); </div><div class="line">    &#125; </div><div class="line">&#125; </div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Product</span> <span class="keyword">extends</span> \<span class="title">yii</span>\<span class="title">db</span>\<span class="title">ActiveRecord</span></span>&#123; </div><div class="line">    <span class="comment">// ... </span></div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getFeatures</span><span class="params">()</span> </span>&#123; </div><div class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;hasMany(Feature::className(), [<span class="string">'product_id'</span> =&gt; <span class="string">'id'</span>]); </div><div class="line">    &#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>重写 yiidbActiveRecord::save() 方法：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProductController</span> <span class="keyword">extends</span> \<span class="title">yii</span>\<span class="title">web</span>\<span class="title">Controller</span></span>&#123;</div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">actionCreate</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="comment">// <span class="doctag">FIXME:</span> <span class="doctag">TODO:</span> WIP, TBD</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在控制器层使用事务：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProductController</span> <span class="keyword">extends</span> \<span class="title">yii</span>\<span class="title">web</span>\<span class="title">Controller</span></span>&#123;</div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">actionCreate</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="comment">// <span class="doctag">FIXME:</span> <span class="doctag">TODO:</span> WIP, TBD</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>作为这些脆弱方法的替代，你应该使用原子操作方案特性。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Feature</span> <span class="keyword">extends</span> \<span class="title">yii</span>\<span class="title">db</span>\<span class="title">ActiveRecord</span></span>&#123;</div><div class="line">    <span class="comment">// ...</span></div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getProduct</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;hasOne(Product::className(), [<span class="string">'product_id'</span> =&gt; <span class="string">'id'</span>]);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">scenarios</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> [</div><div class="line">            <span class="string">'userCreates'</span> =&gt; [</div><div class="line">                <span class="string">'attributes'</span> =&gt; [<span class="string">'name'</span>, <span class="string">'value'</span>],</div><div class="line">                <span class="string">'atomic'</span> =&gt; [<span class="keyword">self</span>::OP_INSERT],</div><div class="line">            ],</div><div class="line">        ];</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Product</span> <span class="keyword">extends</span> \<span class="title">yii</span>\<span class="title">db</span>\<span class="title">ActiveRecord</span></span>&#123;</div><div class="line">    <span class="comment">// ...</span></div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getFeatures</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;hasMany(Feature::className(), [<span class="string">'id'</span> =&gt; <span class="string">'product_id'</span>]);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">scenarios</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> [</div><div class="line">            <span class="string">'userCreates'</span> =&gt; [</div><div class="line">                <span class="string">'attributes'</span> =&gt; [<span class="string">'title'</span>, <span class="string">'price'</span>],</div><div class="line">                <span class="string">'atomic'</span> =&gt; [<span class="keyword">self</span>::OP_INSERT],</div><div class="line">            ],</div><div class="line">        ];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">afterValidate</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">parent</span>::afterValidate();</div><div class="line">        <span class="comment">// <span class="doctag">FIXME:</span> <span class="doctag">TODO:</span> WIP, TBD</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">afterSave</span><span class="params">($insert)</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">parent</span>::afterSave($insert);</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">$this</span>-&gt;getScenario() === <span class="string">'userCreates'</span>) &#123;</div><div class="line">            <span class="comment">// <span class="doctag">FIXME:</span> <span class="doctag">TODO:</span> WIP, TBD</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Controller里的代码将变得很简洁：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProductController</span> <span class="keyword">extends</span> \<span class="title">yii</span>\<span class="title">web</span>\<span class="title">Controller</span></span>&#123;</div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">actionCreate</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="comment">// <span class="doctag">FIXME:</span> <span class="doctag">TODO:</span> WIP, TBD</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>控制器非常简洁：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProductController</span> <span class="keyword">extends</span> \<span class="title">yii</span>\<span class="title">web</span>\<span class="title">Controller</span></span>&#123;</div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">actionCreate</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="comment">// <span class="doctag">FIXME:</span> <span class="doctag">TODO:</span> WIP, TBD</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="被污染属性"><a href="#被污染属性" class="headerlink" title="被污染属性"></a>被污染属性</h4><blockquote>
+<p>当你调用yiidbActiveRecord::save()用于保存活动记录(Active Record)实例时,只有被污染的属性才会被保存。</p>
+<p>一个属性是否认定为被污染取决于它的值自从最后一次从数据库加载或者最近一次保存到数据库后到现在是否被修改过。注意:无论活动记录(Active Record)是否有被污染属性，数据验证始终会执行。</p>
+<p>活动记录(Active Record)会自动维护一个污染数据列表。它的工作方式是通过维护一个较旧属性值版本，并且将它们与最新的进行比较。</p>
+<p>你可以通过调用yiidbActiveRecord::getDirtyAttributes()来获取当前的污染属性。</p>
+<p>你也可以调用yiidbActiveRecord::markAttributeDirty()来显示的标记一个属性为污染属性。</p>
+<p>如果你对最近一次修改前的属性值感兴趣，你可以调用yiidbActiveRecord::getOldAttributes() 或 yiidbActiveRecord::getOldAttribute()。</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/savior.weixinpay.cck.jpg" alt="Savior Lv WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/uploads/savior.alipay.cck.jpg" alt="Savior Lv Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/yii2/" rel="tag"># yii2</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/28/nginx-413/" rel="next" title="nginx-413">
+                <i class="fa fa-chevron-left"></i> nginx-413
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/09/centos-forget-mysql-password/" rel="prev" title="centos7 忘记MySQL密码解决办法">
+                centos7 忘记MySQL密码解决办法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Savior Lv" />
+          <p class="site-author-name" itemprop="name">Savior Lv</p>
+           
+              <p class="site-description motion-element" itemprop="description">study life</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本概念"><span class="nav-number">2.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#声明-AR-类"><span class="nav-number">3.</span> <span class="nav-text">声明 AR 类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问列数据"><span class="nav-number">4.</span> <span class="nav-text">访问列数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建立数据库连接"><span class="nav-number">5.</span> <span class="nav-text">建立数据库连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查询数据"><span class="nav-number">6.</span> <span class="nav-text">查询数据</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#以数组形式获取数据"><span class="nav-number">6.1.</span> <span class="nav-text">以数组形式获取数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#批量获取数据"><span class="nav-number">6.2.</span> <span class="nav-text">批量获取数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#操作数据-CURD"><span class="nav-number">6.3.</span> <span class="nav-text">操作数据(CURD)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据输入与有效性验证"><span class="nav-number">6.4.</span> <span class="nav-text">数据输入与有效性验证</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#读取默认值"><span class="nav-number">6.5.</span> <span class="nav-text">读取默认值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查询关联的数据"><span class="nav-number">6.6.</span> <span class="nav-text">查询关联的数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#默认作用域"><span class="nav-number">6.7.</span> <span class="nav-text">默认作用域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#事务操作"><span class="nav-number">6.8.</span> <span class="nav-text">事务操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#被污染属性"><span class="nav-number">6.9.</span> <span class="nav-text">被污染属性</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Savior Lv</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
