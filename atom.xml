@@ -5,9 +5,9 @@
   <subtitle>一叶障目，不见泰山</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://blog.upstady.com/"/>
+  <link href="https://saviorlv.github.io/"/>
   <updated>2019-08-01T06:32:44.841Z</updated>
-  <id>http://blog.upstady.com/</id>
+  <id>https://saviorlv.github.io/</id>
   
   <author>
     <name>Savior Lv</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>yii2 阿里云 短信服务 aliyun_dysms [ 2.0 版本 ]</title>
-    <link href="http://blog.upstady.com/2018/06/23/aliyun-dysms/"/>
-    <id>http://blog.upstady.com/2018/06/23/aliyun-dysms/</id>
+    <link href="https://saviorlv.github.io/2018/06/23/aliyun-dysms/"/>
+    <id>https://saviorlv.github.io/2018/06/23/aliyun-dysms/</id>
     <published>2018-06-22T20:53:14.000Z</published>
     <updated>2019-08-01T06:32:44.841Z</updated>
     
@@ -34,19 +34,19 @@
     
     </summary>
     
-      <category term="阿里云" scheme="http://blog.upstady.com/categories/%E9%98%BF%E9%87%8C%E4%BA%91/"/>
+      <category term="阿里云" scheme="https://saviorlv.github.io/categories/%E9%98%BF%E9%87%8C%E4%BA%91/"/>
     
     
-      <category term="alyun" scheme="http://blog.upstady.com/tags/alyun/"/>
+      <category term="alyun" scheme="https://saviorlv.github.io/tags/alyun/"/>
     
-      <category term="sms" scheme="http://blog.upstady.com/tags/sms/"/>
+      <category term="sms" scheme="https://saviorlv.github.io/tags/sms/"/>
     
   </entry>
   
   <entry>
     <title>yii2 阿里云 OSS服务 aliyun_oss [ 2.0 版本 ]</title>
-    <link href="http://blog.upstady.com/2018/06/23/aliyun-oss/"/>
-    <id>http://blog.upstady.com/2018/06/23/aliyun-oss/</id>
+    <link href="https://saviorlv.github.io/2018/06/23/aliyun-oss/"/>
+    <id>https://saviorlv.github.io/2018/06/23/aliyun-oss/</id>
     <published>2018-06-22T20:39:24.000Z</published>
     <updated>2019-08-01T06:32:44.842Z</updated>
     
@@ -62,21 +62,21 @@
     
     </summary>
     
-      <category term="Yii2" scheme="http://blog.upstady.com/categories/Yii2/"/>
+      <category term="Yii2" scheme="https://saviorlv.github.io/categories/Yii2/"/>
     
     
-      <category term="aliyun" scheme="http://blog.upstady.com/tags/aliyun/"/>
+      <category term="aliyun" scheme="https://saviorlv.github.io/tags/aliyun/"/>
     
-      <category term="oss" scheme="http://blog.upstady.com/tags/oss/"/>
+      <category term="oss" scheme="https://saviorlv.github.io/tags/oss/"/>
     
-      <category term="yii2" scheme="http://blog.upstady.com/tags/yii2/"/>
+      <category term="yii2" scheme="https://saviorlv.github.io/tags/yii2/"/>
     
   </entry>
   
   <entry>
     <title>Yii2 自带事件的用法</title>
-    <link href="http://blog.upstady.com/2018/06/20/yii2-event/"/>
-    <id>http://blog.upstady.com/2018/06/20/yii2-event/</id>
+    <link href="https://saviorlv.github.io/2018/06/20/yii2-event/"/>
+    <id>https://saviorlv.github.io/2018/06/20/yii2-event/</id>
     <published>2018-06-20T07:52:12.000Z</published>
     <updated>2019-08-01T06:32:44.846Z</updated>
     
@@ -91,19 +91,19 @@
     
     </summary>
     
-      <category term="Yii2" scheme="http://blog.upstady.com/categories/Yii2/"/>
+      <category term="Yii2" scheme="https://saviorlv.github.io/categories/Yii2/"/>
     
     
-      <category term="yii2" scheme="http://blog.upstady.com/tags/yii2/"/>
+      <category term="yii2" scheme="https://saviorlv.github.io/tags/yii2/"/>
     
-      <category term="event" scheme="http://blog.upstady.com/tags/event/"/>
+      <category term="event" scheme="https://saviorlv.github.io/tags/event/"/>
     
   </entry>
   
   <entry>
     <title>服务器部署hexo-blog</title>
-    <link href="http://blog.upstady.com/2017/11/17/hexo-blog/"/>
-    <id>http://blog.upstady.com/2017/11/17/hexo-blog/</id>
+    <link href="https://saviorlv.github.io/2017/11/17/hexo-blog/"/>
+    <id>https://saviorlv.github.io/2017/11/17/hexo-blog/</id>
     <published>2017-11-17T08:07:52.000Z</published>
     <updated>2019-08-01T06:32:44.844Z</updated>
     
@@ -122,21 +122,21 @@
     
     </summary>
     
-      <category term="Hexo" scheme="http://blog.upstady.com/categories/Hexo/"/>
+      <category term="Hexo" scheme="https://saviorlv.github.io/categories/Hexo/"/>
     
     
-      <category term="nginx" scheme="http://blog.upstady.com/tags/nginx/"/>
+      <category term="nginx" scheme="https://saviorlv.github.io/tags/nginx/"/>
     
-      <category term="linux" scheme="http://blog.upstady.com/tags/linux/"/>
+      <category term="linux" scheme="https://saviorlv.github.io/tags/linux/"/>
     
-      <category term="hexo" scheme="http://blog.upstady.com/tags/hexo/"/>
+      <category term="hexo" scheme="https://saviorlv.github.io/tags/hexo/"/>
     
   </entry>
   
   <entry>
     <title>server-send-file</title>
-    <link href="http://blog.upstady.com/2017/10/31/server-send-file/"/>
-    <id>http://blog.upstady.com/2017/10/31/server-send-file/</id>
+    <link href="https://saviorlv.github.io/2017/10/31/server-send-file/"/>
+    <id>https://saviorlv.github.io/2017/10/31/server-send-file/</id>
     <published>2017-10-31T06:13:19.000Z</published>
     <updated>2019-08-01T06:32:44.845Z</updated>
     
@@ -150,19 +150,19 @@
     
     </summary>
     
-      <category term="Linux" scheme="http://blog.upstady.com/categories/Linux/"/>
+      <category term="Linux" scheme="https://saviorlv.github.io/categories/Linux/"/>
     
     
-      <category term="linux" scheme="http://blog.upstady.com/tags/linux/"/>
+      <category term="linux" scheme="https://saviorlv.github.io/tags/linux/"/>
     
-      <category term="rsync" scheme="http://blog.upstady.com/tags/rsync/"/>
+      <category term="rsync" scheme="https://saviorlv.github.io/tags/rsync/"/>
     
   </entry>
   
   <entry>
     <title>centos7 忘记MySQL密码解决办法</title>
-    <link href="http://blog.upstady.com/2017/09/09/centos-forget-mysql-password/"/>
-    <id>http://blog.upstady.com/2017/09/09/centos-forget-mysql-password/</id>
+    <link href="https://saviorlv.github.io/2017/09/09/centos-forget-mysql-password/"/>
+    <id>https://saviorlv.github.io/2017/09/09/centos-forget-mysql-password/</id>
     <published>2017-09-09T03:31:56.000Z</published>
     <updated>2019-08-01T06:32:44.842Z</updated>
     
@@ -176,19 +176,19 @@
     
     </summary>
     
-      <category term="Linux" scheme="http://blog.upstady.com/categories/Linux/"/>
+      <category term="Linux" scheme="https://saviorlv.github.io/categories/Linux/"/>
     
     
-      <category term="centos" scheme="http://blog.upstady.com/tags/centos/"/>
+      <category term="centos" scheme="https://saviorlv.github.io/tags/centos/"/>
     
-      <category term="mysql" scheme="http://blog.upstady.com/tags/mysql/"/>
+      <category term="mysql" scheme="https://saviorlv.github.io/tags/mysql/"/>
     
   </entry>
   
   <entry>
     <title>yii2-ActiveRecord</title>
-    <link href="http://blog.upstady.com/2017/08/29/yii2-ActiveRecord/"/>
-    <id>http://blog.upstady.com/2017/08/29/yii2-ActiveRecord/</id>
+    <link href="https://saviorlv.github.io/2017/08/29/yii2-ActiveRecord/"/>
+    <id>https://saviorlv.github.io/2017/08/29/yii2-ActiveRecord/</id>
     <published>2017-08-29T09:07:29.000Z</published>
     <updated>2019-08-01T06:32:44.846Z</updated>
     
@@ -202,17 +202,17 @@
     
     </summary>
     
-      <category term="Yii2" scheme="http://blog.upstady.com/categories/Yii2/"/>
+      <category term="Yii2" scheme="https://saviorlv.github.io/categories/Yii2/"/>
     
     
-      <category term="yii2" scheme="http://blog.upstady.com/tags/yii2/"/>
+      <category term="yii2" scheme="https://saviorlv.github.io/tags/yii2/"/>
     
   </entry>
   
   <entry>
     <title>nginx-413</title>
-    <link href="http://blog.upstady.com/2017/08/28/nginx-413/"/>
-    <id>http://blog.upstady.com/2017/08/28/nginx-413/</id>
+    <link href="https://saviorlv.github.io/2017/08/28/nginx-413/"/>
+    <id>https://saviorlv.github.io/2017/08/28/nginx-413/</id>
     <published>2017-08-28T07:40:52.000Z</published>
     <updated>2019-08-01T06:32:44.845Z</updated>
     
@@ -226,19 +226,19 @@
     
     </summary>
     
-      <category term="Nginx" scheme="http://blog.upstady.com/categories/Nginx/"/>
+      <category term="Nginx" scheme="https://saviorlv.github.io/categories/Nginx/"/>
     
     
-      <category term="nginx" scheme="http://blog.upstady.com/tags/nginx/"/>
+      <category term="nginx" scheme="https://saviorlv.github.io/tags/nginx/"/>
     
-      <category term="php" scheme="http://blog.upstady.com/tags/php/"/>
+      <category term="php" scheme="https://saviorlv.github.io/tags/php/"/>
     
   </entry>
   
   <entry>
     <title>git-project</title>
-    <link href="http://blog.upstady.com/2017/08/14/git-project/"/>
-    <id>http://blog.upstady.com/2017/08/14/git-project/</id>
+    <link href="https://saviorlv.github.io/2017/08/14/git-project/"/>
+    <id>https://saviorlv.github.io/2017/08/14/git-project/</id>
     <published>2017-08-14T06:32:07.000Z</published>
     <updated>2019-08-01T06:32:44.844Z</updated>
     
@@ -254,19 +254,19 @@
     
     </summary>
     
-      <category term="Git" scheme="http://blog.upstady.com/categories/Git/"/>
+      <category term="Git" scheme="https://saviorlv.github.io/categories/Git/"/>
     
     
-      <category term="git" scheme="http://blog.upstady.com/tags/git/"/>
+      <category term="git" scheme="https://saviorlv.github.io/tags/git/"/>
     
-      <category term="github" scheme="http://blog.upstady.com/tags/github/"/>
+      <category term="github" scheme="https://saviorlv.github.io/tags/github/"/>
     
   </entry>
   
   <entry>
     <title>centos-svn</title>
-    <link href="http://blog.upstady.com/2017/08/07/centos-svn/"/>
-    <id>http://blog.upstady.com/2017/08/07/centos-svn/</id>
+    <link href="https://saviorlv.github.io/2017/08/07/centos-svn/"/>
+    <id>https://saviorlv.github.io/2017/08/07/centos-svn/</id>
     <published>2017-08-07T02:33:37.000Z</published>
     <updated>2019-08-01T06:32:44.842Z</updated>
     
@@ -285,19 +285,19 @@
     
     </summary>
     
-      <category term="Linux" scheme="http://blog.upstady.com/categories/Linux/"/>
+      <category term="Linux" scheme="https://saviorlv.github.io/categories/Linux/"/>
     
     
-      <category term="centos" scheme="http://blog.upstady.com/tags/centos/"/>
+      <category term="centos" scheme="https://saviorlv.github.io/tags/centos/"/>
     
-      <category term="svn" scheme="http://blog.upstady.com/tags/svn/"/>
+      <category term="svn" scheme="https://saviorlv.github.io/tags/svn/"/>
     
   </entry>
   
   <entry>
     <title>centos7-Lnmp</title>
-    <link href="http://blog.upstady.com/2017/08/04/centos7-Lnmp/"/>
-    <id>http://blog.upstady.com/2017/08/04/centos7-Lnmp/</id>
+    <link href="https://saviorlv.github.io/2017/08/04/centos7-Lnmp/"/>
+    <id>https://saviorlv.github.io/2017/08/04/centos7-Lnmp/</id>
     <published>2017-08-04T01:13:21.000Z</published>
     <updated>2019-08-01T06:32:44.843Z</updated>
     
@@ -316,12 +316,12 @@
     
     </summary>
     
-      <category term="Linux" scheme="http://blog.upstady.com/categories/Linux/"/>
+      <category term="Linux" scheme="https://saviorlv.github.io/categories/Linux/"/>
     
     
-      <category term="aliyun" scheme="http://blog.upstady.com/tags/aliyun/"/>
+      <category term="aliyun" scheme="https://saviorlv.github.io/tags/aliyun/"/>
     
-      <category term="lnmp" scheme="http://blog.upstady.com/tags/lnmp/"/>
+      <category term="lnmp" scheme="https://saviorlv.github.io/tags/lnmp/"/>
     
   </entry>
   
