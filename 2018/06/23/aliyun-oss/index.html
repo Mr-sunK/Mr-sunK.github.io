@@ -62,7 +62,7 @@
 </script>
 
   <meta name="description" content="Yii2 阿里云 OSS安装 1composer require mrk/yii2-aliyun-oss:@dev or add 1&amp;quot;mrk/yii2-aliyun-oss&amp;quot;:&amp;quot;@dev&amp;quot; 使用  在 main.php 文件中做如下修改  123456789components =&amp;gt; [    &apos;oss&apos; =&amp;gt; [        &apos;class&apos;">
-<meta name="keywords" content="aliyun,oss,yii2">
+<meta name="keywords" content="aliyun,yii2,oss">
 <meta property="og:type" content="article">
 <meta property="og:title" content="yii2 阿里云 OSS服务 aliyun_oss [ 2.0 版本 ]">
 <meta property="og:url" content="http://blog.upstady.com/2018/06/23/aliyun-oss/index.html">
@@ -364,9 +364,9 @@
         <div class="post-tags">
             <a href="/tags/aliyun/" rel="tag"># aliyun</a>
           
-            <a href="/tags/oss/" rel="tag"># oss</a>
-          
             <a href="/tags/yii2/" rel="tag"># yii2</a>
+          
+            <a href="/tags/oss/" rel="tag"># oss</a>
           
         </div>
         <div class="post-nav">
@@ -398,6 +398,9 @@
 
           </div>
           
+    
+    <div class="comments" id="gitalk-container"></div>
+  
 
 
         </div>
@@ -654,6 +657,26 @@
 
 
 
+
+    
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '710be4946e35be67b559',
+    clientSecret: '710fe4a652f65ecdc6df511594e97d36863214c2',
+    repo: 'blog-gitalk',
+    owner: '',
+    admin: [''],
+    id: md5(location.pathname),
+      language: 'zh-CN',
+    
+    distractionFreeMode: ''
+  });
+  gitalk.render('gitalk-container');
+</script>
 
 
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>

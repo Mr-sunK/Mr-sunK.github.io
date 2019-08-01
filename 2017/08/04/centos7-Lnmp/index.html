@@ -442,6 +442,9 @@
 
           </div>
           
+    
+    <div class="comments" id="gitalk-container"></div>
+  
 
 
         </div>
@@ -698,6 +701,26 @@
 
 
 
+
+    
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '710be4946e35be67b559',
+    clientSecret: '710fe4a652f65ecdc6df511594e97d36863214c2',
+    repo: 'blog-gitalk',
+    owner: '',
+    admin: [''],
+    id: md5(location.pathname),
+      language: 'zh-CN',
+    
+    distractionFreeMode: ''
+  });
+  gitalk.render('gitalk-container');
+</script>
 
 
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
